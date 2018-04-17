@@ -1,19 +1,11 @@
-import numpy as np
-import matplotlib.pyplot as plt
+from defVar import *    #Import variabels and packages
 
-pause = 1e-4
-alpha = .25
-steps = 10000
-im = plt.imread('lena.png')
-im = np.sum(im, 2) / 3  
-
-
-def explicitLaplace(img):
-    return (img[:-2, 1:-1] +
-            img[2:, 1:-1] +
-            img[1:-1, :-2] +
-            img[1:-1, 2:] -
-            4*img[1:-1, 1:-1])
+def explicitLaplace(im):
+    return (im[:-2, 1:-1] +
+            im[2:, 1:-1] +
+            im[1:-1, :-2] +
+            im[1:-1, 2:] -
+            4*im[1:-1, 1:-1])
 
 def blurring(im, alpha, steps, pause, boundary):
 
@@ -28,7 +20,7 @@ def blurring(im, alpha, steps, pause, boundary):
             im[:, -1] = im[:, -2]
             im[0, :] = im[1, :]
             im[-1, :] = im[-2 , :]
-            
+            if boundary == 'd':
         
         data.set_array(im)
         plt.draw()
