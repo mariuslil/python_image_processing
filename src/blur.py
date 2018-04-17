@@ -35,4 +35,4 @@ def blurring(im, alpha, steps, pause, boundary):
         plt.pause(pause)
         
 
-#blurring(im, alpha, steps, pause, 'n')
+blurring(im, alpha, steps, pause, 'n')
