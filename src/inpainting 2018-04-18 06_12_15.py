@@ -7,7 +7,7 @@ steps = 10000
 im = plt.imread('lena.png')
 im = np.sum(im, 2) / 3
 
-def explicitLaplace(img):   #Laplace transformation
+def explicitLaplace(img):
     return (img[:-2, 1:-1] +
             img[2:, 1:-1] +
             img[1:-1, :-2] +

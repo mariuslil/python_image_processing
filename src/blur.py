@@ -3,12 +3,11 @@ import matplotlib.pyplot as plt
 
 pause = 1e-4
 alpha = .25
-steps = 10000
+steps = 100
 im = plt.imread('lena.png')
 im = np.sum(im, 2) / 3  
 
-
-def explicitLaplace(img):
+def explicitLaplace(img):   #Laplace transformation
     return (img[:-2, 1:-1] +
             img[2:, 1:-1] +
             img[1:-1, :-2] +
