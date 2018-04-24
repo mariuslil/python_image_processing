@@ -3,9 +3,8 @@ import matplotlib.pyplot as plt
 
 pause = 1e-4
 alpha = .25
-steps = 10000
+steps = 100
 im = plt.imread('lena.png')
-im = np.sum(im, 2) / 3
 k = 5
 
 def explicitLaplace(img):   #Laplace transformation
@@ -15,23 +14,34 @@ def explicitLaplace(img):   #Laplace transformation
             img[1:-1, 2:] -
             4*img[1:-1, 1:-1])
 
-plt.ion()
-data = plt.imshow(im, plt.cm.gray)
-plt.draw()
+def contrast(ima, colour):
+    if colour:
+        plt.ion()
+        data = plt.imshow(ima)
+        plt.draw()
 
-lapl0 = explicitLaplace(im) #Laplace for original image
+    else:
+        ima = np.sum(im, 2) / 3
+        plt.ion()
+        data = plt.imshow(ima, plt.cm.gray)
+        plt.draw()
 
-for i in range(0, steps):   #Increace contrast
-    im[1:-1, 1:-1] += alpha * (explicitLaplace(im) - k * lapl0)
-    #clamps values
-    im[im>1] = 1
-    im[im<0] = 0
-    #Neuman boundary
-    im[:, 0] = im[:, 1]
-    im[:, -1] = im[:, -2]
-    im[0, :] = im[1, :]
-    im[-1, :] = im[-2 , :]
+    lapl0 = explicitLaplace(ima) #Laplace for original image
 
-    data.set_array(im)
-    plt.draw()
-    plt.pause(pause)
+    for i in range(0, steps):   #Increace contrast
+        ima[1:-1, 1:-1] += alpha * (explicitLaplace(ima) - k * lapl0)
+        #clamps values
+        ima[ima>1] = 1
+        ima[ima<0] = 0
+        #Neuman boundary
+        ima[:, 0] = ima[:, 1]
+        ima[:, -1] = ima[:, -2]
+        ima[0, :] = ima[1, :]
+        ima[-1, :] = ima[-2 , :]
+
+        data.set_array(ima)
+        plt.draw()
+        plt.pause(pause)
+
+contrast(im, False)
+contrast(im, True)

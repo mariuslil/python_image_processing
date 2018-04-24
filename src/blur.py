@@ -5,7 +5,6 @@ pause = 1e-4
 alpha = .25
 steps = 100
 im = plt.imread('lena.png')
-#im = np.sum(im, 2) / 3  
 
 def explicitLaplace(img):   #Laplace transformation
     return (img[:-2, 1:-1] +
@@ -14,24 +13,29 @@ def explicitLaplace(img):   #Laplace transformation
             img[1:-1, 2:] -
             4*img[1:-1, 1:-1])
 
-def blurring(im, alpha, steps, pause, boundary):
-
-    plt.ion()
-    data = plt.imshow(im)
-    plt.draw()
+def blurring(ima, alpha, steps, pause, colour):
+    if colour:  #Colour blur
+        plt.ion()
+        data = plt.imshow(ima)
+        plt.draw()    
+    
+    else:   #Greyscale blur
+        ima = np.sum(im, 2) / 3
+        plt.ion()
+        data = plt.imshow(ima, plt.cm.gray)
+        plt.draw()
 
     for i in range(0, steps):
-        im[1:-1, 1:-1] += alpha * explicitLaplace(im)
-        if boundary == 'n':    # Neumann boundary
-            im[:, 0] = im[:, 1]
-            im[:, -1] = im[:, -2]
-            im[0, :] = im[1, :]
-            im[-1, :] = im[-2 , :]
-            
+        ima[1:-1, 1:-1] += alpha * explicitLaplace(ima)
+        # Neumann boundary
+        ima[:, 0] = ima[:, 1]
+        ima[:, -1] = ima[:, -2]
+        ima[0, :] = ima[1, :]
+        ima[-1, :] = ima[-2 , :]
         
-        data.set_array(im)
+        data.set_array(ima)
         plt.draw()
         plt.pause(pause)
-        
 
-blurring(im, alpha, steps, pause, 'n')
+blurring(im, alpha, steps, pause, False)
+blurring(im, alpha, steps, pause, True)
