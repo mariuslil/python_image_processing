@@ -19,7 +19,7 @@ def blurring(ima, alpha, steps, pause, colour):
         data = plt.imshow(ima)
         plt.draw()    
     
-    else:   #Greyscale blur
+    else:   #Grayscale blur
         ima = np.sum(im, 2) / 3
         plt.ion()
         data = plt.imshow(ima, plt.cm.gray)
